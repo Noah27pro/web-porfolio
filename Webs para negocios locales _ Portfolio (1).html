@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Webs para negocios locales | Portfolio</title>
+<style>
+:root{--bg:#fafaf7;--fg:#16181d;--mut:#5d6470;--card:#fff;--line:#e4e4de;--acc:#1f6feb;--acc2:#0d9f6e;--wa:#25d366;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1115;--fg:#f0f1f3;--mut:#9aa1ad;--card:#171a21;--line:#272b35;--acc:#5b9bff;--acc2:#3ccf98}}
+:root[data-theme="dark"]{--bg:#0f1115;--fg:#f0f1f3;--mut:#9aa1ad;--card:#171a21;--line:#272b35;--acc:#5b9bff;--acc2:#3ccf98}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.w{max-width:1000px;margin:0 auto;padding:0 20px}
+section{padding:64px 0;border-top:1px solid var(--line)}
+h1{font-size:clamp(2rem,5vw,3.4rem);line-height:1.1;margin:0 0 18px;letter-spacing:-.02em}
+h2{font-size:clamp(1.5rem,3.5vw,2.1rem);margin:0 0 12px;letter-spacing:-.01em}
+p{margin:0 0 14px;color:var(--mut)}
+.eyebrow{color:var(--acc);font-weight:700;font-size:.8rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+.hero{padding:80px 0 64px;border:0}
+.hero p{font-size:1.15rem;max-width:620px}
+.btn{display:inline-block;padding:14px 22px;border-radius:12px;font-weight:700;text-decoration:none;color:#fff;background:var(--wa);margin:6px 8px 6px 0}
+.btn.alt{background:transparent;color:var(--fg);border:1.5px solid var(--line)}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin-top:24px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
+.card h3{margin:0 0 6px;font-size:1.1rem}
+.card p{margin:0;font-size:.97rem}
+.ph{height:130px;border-radius:12px;margin-bottom:14px;background:linear-gradient(135deg,var(--acc),var(--acc2));opacity:.85;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
+.tag{display:inline-block;font-size:.75rem;color:var(--acc2);font-weight:700;margin-bottom:6px}
+.num{width:38px;height:38px;border-radius:50%;background:var(--acc);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:12px}
+.price{font-size:1.9rem;font-weight:800;color:var(--fg);margin:6px 0}
+.price small{font-size:.9rem;color:var(--mut);font-weight:500}
+ul{padding-left:20px;margin:10px 0 0;color:var(--mut);font-size:.95rem}
+li{margin-bottom:4px}
+.feat{border:2px solid var(--acc)}
+.cta{text-align:center;padding:80px 0}
+.cta .btn{font-size:1.1rem;padding:18px 28px}
+footer{text-align:center;padding:28px 0;color:var(--mut);font-size:.85rem;border-top:1px solid var(--line)}
+
+.admin-btn{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:50;display:none;background:var(--fg);color:var(--bg);border:0;border-radius:999px;padding:12px 18px;font:700 .9rem system-ui;cursor:pointer}
+#panel{display:none;position:fixed;inset:0;z-index:60;background:var(--bg);overflow:auto;padding:calc(20px + env(safe-area-inset-top,0px)) 20px 40px}
+#panel.on{display:block}
+#panel .w{max-width:760px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+label{display:block;font-weight:600;font-size:.88rem;margin:12px 0 4px}
+input,textarea,select{width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--fg);font:inherit}
+textarea{min-height:80px}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.sm{padding:9px 14px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--fg);font:600 .85rem system-ui;cursor:pointer}
+.sm.pri{background:var(--acc);color:#fff;border-color:var(--acc)}.sm.del{color:#d33}
+.item{display:flex;gap:12px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--card);margin-top:10px}
+.item img,.item .th{width:64px;height:48px;border-radius:8px;object-fit:cover;background:linear-gradient(135deg,var(--acc),var(--acc2));flex:none}
+.item .t{flex:1;min-width:0}.item b{display:block}.item small{color:var(--mut)}
+.card img.cover{width:100%;height:130px;object-fit:cover;border-radius:12px;margin-bottom:14px}
+#msg{color:var(--mut);font-size:.85rem;margin-top:10px}
+</style>
+</head>
+<body>
+
+<header class="hero"><div class="w">
+  <div class="eyebrow">Solo hago una cosa: tu página web</div>
+  <h1>Webs rápidas y modernas que hacen que te llamen o te escriban por WhatsApp.</h1>
+  <p>No necesitas entender de código ni de diseño. Yo me encargo de crear tu web de principio a fin para que tu negocio consiga más clientes en tu zona.</p>
+  <a class="btn" href="https://wa.me/34600000000" target="_blank" rel="noopener">Hablemos por WhatsApp</a>
+  <a class="btn alt" href="#proyectos">Ver proyectos</a>
+</div></header>
+
+<section id="proyectos"><div class="w">
+  <div class="eyebrow">Experiencia</div>
+  <h2>Webs pensadas para negocios como el tuyo</h2>
+  <p>Cada proyecto muestra cómo una buena web da imagen profesional y trae presupuestos a negocios de servicios locales.</p>
+  <div class="grid" id="projects">
+    <div class="card"><div class="ph">Clínica</div><span class="tag">SALUD</span><h3>Clínica dental</h3><p>Reserva de citas online y llamadas directas desde el móvil.</p></div>
+    <div class="card"><div class="ph">Electricista</div><span class="tag">OFICIOS</span><h3>Electricista autónomo</h3><p>Más solicitudes de presupuesto con un formulario de 3 campos.</p></div>
+    <div class="card"><div class="ph">Tienda</div><span class="tag">COMERCIO</span><h3>Tienda de barrio</h3><p>Catálogo claro y botón de pedido por WhatsApp.</p></div>
+    <div class="card"><div class="ph">Restaurante</div><span class="tag">HOSTELERÍA</span><h3>Restaurante local</h3><p>Carta, ubicación y reservas en un solo vistazo.</p></div>
+  </div>
+</div></section>
+
+<section><div class="w">
+  <div class="eyebrow">Proceso</div>
+  <h2>Cómo trabajamos: tú no te complicas</h2>
+  <p>Yo hago el trabajo pesado. A ti solo te pido una conversación y tus textos o fotos.</p>
+  <div class="grid">
+    <div class="card"><div class="num">1</div><h3>Hablamos de tu negocio</h3><p>Una llamada corta para entender qué ofreces y a qué clientes quieres llegar.</p></div>
+    <div class="card"><div class="num">2</div><h3>Creamos la estructura</h3><p>Te enseño un borrador y lo ajustamos juntos hasta que te encaje.</p></div>
+    <div class="card"><div class="num">3</div><h3>Te la entrego lista</h3><p>Web funcionando en X días, sin líos técnicos y con todo configurado.</p></div>
+  </div>
+</div></section>
+
+<section class="cta"><div class="w">
+  <h2>¿Empezamos?</h2>
+  <p>El primer paso es fácil: una conversación rápida y sin compromiso.</p>
+  <a class="btn" href="https://wa.me/34600000000" target="_blank" rel="noopener">Hablemos por WhatsApp</a>
+  <a class="btn alt" href="https://wa.me/34600000000?text=Quiero%20reservar%20una%20llamada%20de%2010%20minutos" target="_blank" rel="noopener">Reserva una llamada de 10 minutos</a>
+</div></section>
+
+<button class="admin-btn" id="openPanel">⚙ Panel de control</button>
+<div id="panel"><div class="w">
+  <div class="top"><h2 style="margin:0">Panel de control</h2><button class="sm" id="closePanel">Cerrar</button></div>
+  <p>Sube tus proyectos aquí y aparecerán automáticamente en el portfolio.</p>
+  <div class="card">
+    <h3 id="formTitle" style="margin-bottom:0">Nuevo proyecto</h3>
+    <label for="fTitle">Título</label><input id="fTitle" placeholder="Clínica dental López">
+    <label for="fCat">Sector</label><input id="fCat" placeholder="Salud, oficios, comercio...">
+    <label for="fDesc">Descripción (qué consiguió para el cliente)</label><textarea id="fDesc"></textarea>
+    <label for="fUrl">Enlace a la web (opcional)</label><input id="fUrl" placeholder="https://...">
+    <label for="fImg">Imagen (opcional)</label><input id="fImg" type="file" accept="image/*">
+    <div class="row"><button class="sm pri" id="save">Guardar proyecto</button><button class="sm" id="cancel" style="display:none">Cancelar edición</button></div>
+    <div id="msg"></div>
+  </div>
+  <h3 style="margin-top:28px">Tus proyectos</h3><div id="list"></div>
+</div></div>
+<footer>© Tu nombre · Diseño web para negocios locales</footer>
+
+<script>
+(function(){
+var DEFAULT=document.getElementById('projects').innerHTML, grid=document.getElementById('projects');
+var items=[], editing=null, db=null, assets=null;
+function esc(t){var d=document.createElement('div');d.textContent=t==null?'':t;return d.innerHTML}
+function safeUrl(u){return /^https?:\/\//i.test(u||'')?u:''}
+function render(){
+  if(!items.length){grid.innerHTML=DEFAULT}else{
+  grid.innerHTML=items.map(function(p){
+    var img=p.imageId?'<img class="cover" alt="" src="/_blob/'+esc(p.imageId)+'">':'<div class="ph">'+esc(p.title)+'</div>';
+    var link=safeUrl(p.url)?'<p style="margin-top:10px"><a href="'+esc(safeUrl(p.url))+'" target="_blank" rel="noopener" style="color:var(--acc);font-weight:700">Ver web →</a></p>':'';
+    return '<div class="card">'+img+'<span class="tag">'+esc((p.category||'').toUpperCase())+'</span><h3>'+esc(p.title)+'</h3><p>'+esc(p.description)+'</p>'+link+'</div>'}).join('')}
+  var l=document.getElementById('list');
+  l.innerHTML=items.length?items.map(function(p,i){return '<div class="item">'+(p.imageId?'<img alt="" src="/_blob/'+esc(p.imageId)+'">':'<div class="th"></div>')+'<div class="t"><b>'+esc(p.title)+'</b><small>'+esc(p.category)+'</small></div><button class="sm" data-e="'+i+'">Editar</button><button class="sm del" data-d="'+i+'">Borrar</button></div>'}).join(''):'<p>Aún no has subido proyectos. Mientras tanto se muestran ejemplos de relleno.</p>';
+}
+function msg(t){document.getElementById('msg').textContent=t}
+function reset(){editing=null;['fTitle','fCat','fDesc','fUrl'].forEach(function(i){document.getElementById(i).value=''});document.getElementById('fImg').value='';document.getElementById('formTitle').textContent='Nuevo proyecto';document.getElementById('cancel').style.display='none'}
+async function init(){
+  try{
+    if(!window.claude)return;
+    var user=await claude.use('user'); db=await claude.use('db'); assets=await claude.use('assets');
+    if(db){db.collection('projects').onSnapshot(function(snap){
+      items=snap.docs.map(function(d){var x=d.data()||{};x.id=d.id;return x}).sort(function(a,b){return (b.createdAt||0)-(a.createdAt||0)});render()},function(){})}
+    if(user&&user.isOwner()&&db){document.getElementById('openPanel').style.display='block'}
+  }catch(e){}
+}
+document.getElementById('openPanel').onclick=function(){document.getElementById('panel').classList.add('on')};
+document.getElementById('closePanel').onclick=function(){document.getElementById('panel').classList.remove('on')};
+document.getElementById('cancel').onclick=reset;
+document.getElementById('list').onclick=async function(e){
+  var t=e.target, i;
+  if(t.dataset.e!==undefined){i=+t.dataset.e;var p=items[i];editing=p;
+    document.getElementById('fTitle').value=p.title||'';document.getElementById('fCat').value=p.category||'';document.getElementById('fDesc').value=p.description||'';document.getElementById('fUrl').value=p.url||'';
+    document.getElementById('formTitle').textContent='Editando proyecto';document.getElementById('cancel').style.display='';window.scrollTo(0,0);document.getElementById('panel').scrollTop=0}
+  if(t.dataset.d!==undefined){i=+t.dataset.d;if(!confirm('¿Borrar "'+items[i].title+'"?'))return;
+    try{await db.doc('projects/'+items[i].id).delete()}catch(err){msg('No se pudo borrar.')}}
+};
+document.getElementById('save').onclick=async function(){
+  var title=document.getElementById('fTitle').value.trim();
+  if(!title){msg('Escribe un título.');return}
+  msg('Guardando...');
+  try{
+    var data={title:title,category:document.getElementById('fCat').value.trim(),description:document.getElementById('fDesc').value.trim(),url:document.getElementById('fUrl').value.trim(),
+      createdAt:editing&&editing.createdAt||Date.now(),imageId:editing&&editing.imageId||''};
+    var f=document.getElementById('fImg').files[0];
+    if(f&&assets){var r=await assets.upload(f);data.imageId=r.id}
+    var id=editing?editing.id:'p'+Date.now();
+    await db.doc('projects/'+id).set(data);
+    reset();msg('Guardado. Ya aparece en el portfolio.');
+  }catch(err){msg('No se pudo guardar: '+(err&&err.message||'error'))}
+};
+init();
+})();
+</script>
+</body>
+</html>
