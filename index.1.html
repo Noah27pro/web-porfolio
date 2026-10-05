@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex"><title>Panel de control</title>
+<style>
+:root{--bg:#fafaf7;--fg:#16181d;--mut:#5d6470;--card:#fff;--line:#e4e4de;--acc:#1f6feb}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1115;--fg:#f0f1f3;--mut:#9aa1ad;--card:#171a21;--line:#272b35;--acc:#5b9bff}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,sans-serif}
+.w{max-width:720px;margin:0 auto;padding:24px 20px 60px}
+h1{font-size:1.6rem;margin:0}h2{font-size:1.1rem;margin:28px 0 0}p{color:var(--mut)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin-top:16px}
+label{display:block;font-weight:600;font-size:.88rem;margin:12px 0 4px}
+input,textarea{width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--fg);font:inherit}
+textarea{min-height:80px}
+button{padding:10px 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--fg);font:600 .9rem system-ui;cursor:pointer}
+button.pri{background:var(--acc);color:#fff;border-color:var(--acc)}button.del{color:#d33}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.item{display:flex;gap:12px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--card);margin-top:10px}
+.item img,.item .th{width:64px;height:48px;border-radius:8px;object-fit:cover;background:var(--line);flex:none}
+.item .t{flex:1;min-width:0}.item small{color:var(--mut);display:block}
+#msg,#lmsg{font-size:.88rem;margin-top:10px;color:var(--mut)}
+#app{display:none}
+</style></head><body><div class="w">
+<div id="login"><h1>Panel de control</h1><p>Entra con tu usuario de Supabase.</p>
+<div class="card"><label for="em">Email</label><input id="em" type="email" autocomplete="username">
+<label for="pw">Contraseña</label><input id="pw" type="password" autocomplete="current-password">
+<div class="row"><button class="pri" id="go">Entrar</button></div><div id="lmsg"></div></div></div>
+
+<div id="app"><div class="top"><h1>Panel de control</h1><button id="out">Salir</button></div>
+<p>Los proyectos que subas aparecerán en tu portfolio.</p>
+<div class="card"><h2 id="ft" style="margin:0">Nuevo proyecto</h2>
+<label for="fT">Título</label><input id="fT" placeholder="Clínica dental López">
+<label for="fC">Sector</label><input id="fC" placeholder="Salud, oficios, comercio...">
+<label for="fD">Descripción (qué consiguió el cliente)</label><textarea id="fD"></textarea>
+<label for="fU">Enlace a la web (opcional)</label><input id="fU" placeholder="https://...">
+<label for="fI">Imagen (opcional)</label><input id="fI" type="file" accept="image/*">
+<div class="row"><button class="pri" id="save">Guardar proyecto</button><button id="cancel" style="display:none">Cancelar edición</button></div><div id="msg"></div></div>
+<h2>Tus proyectos</h2><div id="list"></div></div>
+</div>
+<script>
+var SB="https://dawsdcdrotklupcygndc.supabase.co", KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRhd3NkY2Ryb3RrbHVwY3lnbmRjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEyMDc5NTAsImV4cCI6MjEwNjc4Mzk1MH0.Bg4IIuLWGUuvDI7YXF6WgFiY7vcwFl4tBLHdZQG83sM";
+var $=function(i){return document.getElementById(i)}, sess=null, items=[], editing=null;
+function esc(t){var d=document.createElement('div');d.textContent=t==null?'':t;return d.innerHTML}
+function saveSess(s){sess=s;if(s)localStorage.setItem('sbs',JSON.stringify(s));else localStorage.removeItem('sbs')}
+async function auth(body,q){var r=await fetch(SB+'/auth/v1/token?grant_type='+q,{method:'POST',headers:{apikey:KEY,'Content-Type':'application/json'},body:JSON.stringify(body)});
+  var j=await r.json();if(!r.ok)throw new Error(j.error_description||j.msg||'Error');return {access:j.access_token,refresh:j.refresh_token}}
+async function api(path,opt,retry){opt=opt||{};opt.headers=Object.assign({apikey:KEY,Authorization:'Bearer '+sess.access},opt.headers||{});
+  var r=await fetch(SB+path,opt);
+  if(r.status===401&&!retry){try{saveSess(await auth({refresh_token:sess.refresh},'refresh_token'))}catch(e){logout();throw e}return api(path,opt,true)}
+  return r}
+function show(on){$('login').style.display=on?'none':'block';$('app').style.display=on?'block':'none'}
+function logout(){saveSess(null);show(false)}
+$('go').onclick=async function(){$('lmsg').textContent='Entrando...';
+  try{saveSess(await auth({email:$('em').value.trim(),password:$('pw').value},'password'));$('pw').value='';$('lmsg').textContent='';show(true);load()}
+  catch(e){$('lmsg').textContent='No se pudo entrar: '+e.message}};
+$('out').onclick=logout;
+async function load(){var r=await api('/rest/v1/projects?select=*&order=created_at.desc');if(!r.ok){$('list').innerHTML='<p>No se pudieron cargar los proyectos.</p>';return}
+  items=await r.json();
+  $('list').innerHTML=items.length?items.map(function(p,i){return '<div class="item">'+(p.image_url?'<img alt="" src="'+esc(p.image_url)+'">':'<div class="th"></div>')+'<div class="t"><b>'+esc(p.title)+'</b><small>'+esc(p.category)+'</small></div><button data-e="'+i+'">Editar</button><button class="del" data-d="'+i+'">Borrar</button></div>'}).join(''):'<p>Aún no hay proyectos. En el portfolio se ven ejemplos de relleno.</p>'}
+function reset(){editing=null;['fT','fC','fD','fU'].forEach(function(i){$(i).value=''});$('fI').value='';$('ft').textContent='Nuevo proyecto';$('cancel').style.display='none'}
+$('cancel').onclick=reset;
+$('list').onclick=async function(e){var t=e.target,p;
+  if(t.dataset.e!==undefined){p=items[+t.dataset.e];editing=p;$('fT').value=p.title||'';$('fC').value=p.category||'';$('fD').value=p.description||'';$('fU').value=p.url||'';$('ft').textContent='Editando proyecto';$('cancel').style.display='';window.scrollTo(0,0)}
+  if(t.dataset.d!==undefined){p=items[+t.dataset.d];if(!confirm('¿Borrar "'+p.title+'"?'))return;
+    var r=await api('/rest/v1/projects?id=eq.'+p.id,{method:'DELETE'});if(!r.ok)alert('No se pudo borrar.');load()}};
+$('save').onclick=async function(){var title=$('fT').value.trim();if(!title){$('msg').textContent='Escribe un título.';return}
+  $('msg').textContent='Guardando...';
+  try{var data={title:title,category:$('fC').value.trim(),description:$('fD').value.trim(),url:$('fU').value.trim()};
+    var f=$('fI').files[0];
+    if(f){var ext=(f.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,''),name=Date.now()+'.'+ext;
+      var u=await api('/storage/v1/object/projects/'+name,{method:'POST',headers:{'Content-Type':f.type||'application/octet-stream'},body:f});
+      if(!u.ok)throw new Error('no se pudo subir la imagen');data.image_url=SB+'/storage/v1/object/public/projects/'+name}
+    var r=editing?await api('/rest/v1/projects?id=eq.'+editing.id,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})
+                 :await api('/rest/v1/projects',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+    if(!r.ok)throw new Error('error al guardar');reset();$('msg').textContent='Guardado. Ya aparece en el portfolio.';load()}
+  catch(e){$('msg').textContent='No se pudo guardar: '+e.message}};
+try{var s=JSON.parse(localStorage.getItem('sbs')||'null');if(s){sess=s;show(true);load()}}catch(e){}
+</script></body></html>
